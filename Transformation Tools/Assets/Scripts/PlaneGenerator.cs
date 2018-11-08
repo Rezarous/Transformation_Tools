@@ -5,32 +5,24 @@ using UnityEngine;
 public class PlaneGenerator : MonoBehaviour {
 
 
+    public Transform point0;
     public Transform point1;
     public Transform point2;
     public Transform point3;
+    public Material thisMat;
 
     void Start()
     {
-        gameObject.AddComponent<MeshFilter>();
-        gameObject.AddComponent<MeshRenderer>();
-        Mesh thisMesh = gameObject.GetComponent<MeshFilter>().mesh;
-        thisMesh.Clear();
-
-        //Vector3[] verticesArray = { new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0) };
-        Vector3[] verticesArray = { point1.position, point2.position, point3.position };
-        thisMesh.vertices = verticesArray;
-
-        Vector2[] uvArray = { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) };
-
-        int[] verticesOrder = { 0, 1, 2 };
-        thisMesh.triangles = verticesOrder;
+        //gameObject.AddComponent<MeshFilter>();
+        //gameObject.AddComponent<MeshRenderer>();
+        UpdateTriangle();
 
     }
 
-    // Update is called once per frame
+
     void Update () {
 
-        UpdateTriangle();
+       UpdateTriangle();
 
     }
 
@@ -39,13 +31,15 @@ public class PlaneGenerator : MonoBehaviour {
         Mesh thisMesh = gameObject.GetComponent<MeshFilter>().mesh;
         thisMesh.Clear();
 
-        //Vector3[] verticesArray = { new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0) };
-        Vector3[] verticesArray = { point1.position, point2.position, point3.position };
+        Vector3[] verticesArray = { point0.position, point1.position, point2.position, point3.position };
         thisMesh.vertices = verticesArray;
 
-        Vector2[] uvArray = { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) };
+        Vector2[] uvArray = { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
 
-        int[] verticesOrder = { 0, 1, 2 };
+        int[] verticesOrder = {
+            0, 1, 2,
+            0, 2, 3};
         thisMesh.triangles = verticesOrder;
+        thisMesh.uv = uvArray;
     }
 }
